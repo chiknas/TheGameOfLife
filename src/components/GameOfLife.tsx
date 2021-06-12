@@ -18,14 +18,18 @@ export type GameOfLifeProps = {
 export const GameOfLife: React.FunctionComponent<GameOfLifeProps> = ({
   gameSpeed,
   canvasOptions: { width, height },
-  pause,
+  pause = false,
 }) => {
   const [frame, setFrame] = useState<JSX.Element[]>([]);
   const [gameState, setGameState] = useState<boolean[]>(
     Array(height * width).fill(false)
   );
 
-  useInterval(() => draw(), gameSpeed);
+  useInterval(() => {
+    if (!pause) {
+      draw();
+    }
+  }, gameSpeed);
   function draw() {
     // calculate the new life state for each cell
     const newState = gameState.map((value, index) => {

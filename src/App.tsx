@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { GameOfLife } from "./components/GameOfLife";
 
 function App() {
+  const [speed, setSpeed] = useState(500);
+  const [pause, setPause] = useState(false);
   return (
     <div className="App">
       <div className="App-header">
-        <GameOfLife gameSpeed={300} canvasOptions={{ width: 50, height: 40 }} />
+        <input
+          id="speed"
+          type="range"
+          min="5500"
+          max="5999"
+          value={speed}
+          onChange={(event) => setSpeed(parseInt(event.target.value))}
+          step="1"
+        />
+        <button onClick={() => setPause(!pause)}>Pause</button>
+        {speed}
+        <GameOfLife
+          gameSpeed={6000 - speed}
+          canvasOptions={{ width: 50, height: 40 }}
+          pause={pause}
+        />
       </div>
     </div>
   );
