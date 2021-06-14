@@ -14,7 +14,7 @@
 
 .cell {
   flex: 1 0 0;
-  border-color: black;
+  border-color: rgb(51, 48, 48);
   border-style: solid;
-  margin: 0.05em;
+  border-width: thin;
 }

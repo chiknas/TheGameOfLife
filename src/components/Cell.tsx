@@ -30,6 +30,7 @@ export const Cell: React.FunctionComponent<CellProps> = ({
   const onClick = () => {
     gameState[index] = !gameState[index];
     setGameState(gameState);
+    setColor(gameState[index] ? alive : dead);
   };
 
   return (

@@ -1,3 +1,11 @@
+const getLeftNeighbour = (index: number, rowSize: number) => {
+  return index % rowSize === 0 ? index + rowSize - 1 : index - 1;
+};
+
+const getRightNeighbour = (index: number, rowSize: number) => {
+  return index % rowSize === rowSize - 1 ? index - rowSize + 1 : index + 1;
+};
+
 export const shouldBeAlive = (
   index: number,
   gameState: boolean[],
@@ -7,50 +15,48 @@ export const shouldBeAlive = (
   let aliveNeighbours = 0;
 
   // neighbours on top
-  if (index > rowSize) {
-    const topNeighbour = index - rowSize;
-    if (gameState[topNeighbour]) {
-      aliveNeighbours++;
-    }
+  const topNeighbour =
+    index < rowSize ? gameSize + index - rowSize : index - rowSize;
+  if (gameState[topNeighbour]) {
+    aliveNeighbours++;
+  }
 
-    const topLeftNeighbour = topNeighbour - 1;
-    if (topLeftNeighbour >= 0 && gameState[topLeftNeighbour]) {
-      aliveNeighbours++;
-    }
+  const topLeftNeighbour = getLeftNeighbour(topNeighbour, rowSize);
+  if (gameState[topLeftNeighbour]) {
+    aliveNeighbours++;
+  }
 
-    const topRightNeighbour = topNeighbour + 1;
-    if (topRightNeighbour >= 0 && gameState[topRightNeighbour]) {
-      aliveNeighbours++;
-    }
+  const topRightNeighbour = getRightNeighbour(topNeighbour, rowSize);
+  if (gameState[topRightNeighbour]) {
+    aliveNeighbours++;
   }
 
   // bottom neighbours
-  if (gameSize - index > rowSize) {
-    const bottomNeighbour = index + rowSize;
-    if (bottomNeighbour < gameSize && gameState[bottomNeighbour]) {
-      aliveNeighbours++;
-    }
+  const bottomNeighbour =
+    gameSize - index <= rowSize ? index % rowSize : index + rowSize;
+  if (gameState[bottomNeighbour]) {
+    aliveNeighbours++;
+  }
 
-    const bottomLeftNeighbour = bottomNeighbour - 1;
-    if (bottomLeftNeighbour < gameSize && gameState[bottomLeftNeighbour]) {
-      aliveNeighbours++;
-    }
+  const bottomLeftNeighbour = getLeftNeighbour(bottomNeighbour, rowSize);
+  if (gameState[bottomLeftNeighbour]) {
+    aliveNeighbours++;
+  }
 
-    const bottomRightNeighbour = bottomNeighbour + 1;
-    if (bottomRightNeighbour < gameSize && gameState[bottomRightNeighbour]) {
-      aliveNeighbours++;
-    }
+  const bottomRightNeighbour = getRightNeighbour(bottomNeighbour, rowSize);
+  if (gameState[bottomRightNeighbour]) {
+    aliveNeighbours++;
   }
 
   // left neighbour
-  const leftNeighbour = index - 1;
-  if (leftNeighbour > 0 && gameState[leftNeighbour]) {
+  const leftNeighbour = getLeftNeighbour(index, rowSize);
+  if (gameState[leftNeighbour]) {
     aliveNeighbours++;
   }
 
   // right neighbour
-  const rightNeighbour = index + 1;
-  if (rightNeighbour > 0 && gameState[rightNeighbour]) {
+  const rightNeighbour = getRightNeighbour(index, rowSize);
+  if (gameState[rightNeighbour]) {
     aliveNeighbours++;
   }
 

@@ -3,7 +3,7 @@ import "./App.css";
 import { GameOfLife } from "./components/GameOfLife";
 
 function App() {
-  const [speed, setSpeed] = useState(500);
+  const [speed, setSpeed] = useState(5999);
   const [pause, setPause] = useState(false);
   return (
     <div className="App">
@@ -11,7 +11,7 @@ function App() {
         <input
           id="speed"
           type="range"
-          min="5500"
+          min="2500"
           max="5999"
           value={speed}
           onChange={(event) => setSpeed(parseInt(event.target.value))}
@@ -19,11 +19,7 @@ function App() {
         />
         <button onClick={() => setPause(!pause)}>Pause</button>
         {speed}
-        <GameOfLife
-          gameSpeed={6000 - speed}
-          canvasOptions={{ width: 50, height: 40 }}
-          pause={pause}
-        />
+        <GameOfLife gameSpeed={6000 - speed} pause={pause} />
       </div>
     </div>
   );

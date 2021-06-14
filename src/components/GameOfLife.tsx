@@ -1,28 +1,34 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Cell } from "./Cell";
 import { shouldBeAlive } from "./gameOfLifeRules";
 import "./Grid.css";
 import { useInterval } from "./useInterval";
 
-type CanvasProps = {
-  width: number;
-  height: number;
-};
+const width = 70;
+const height = 40;
 
 export type GameOfLifeProps = {
   gameSpeed: number;
-  canvasOptions: CanvasProps;
   pause?: boolean;
 };
 
 export const GameOfLife: React.FunctionComponent<GameOfLifeProps> = ({
   gameSpeed,
-  canvasOptions: { width, height },
   pause = false,
 }) => {
-  const [frame, setFrame] = useState<JSX.Element[]>([]);
   const [gameState, setGameState] = useState<boolean[]>(
     Array(height * width).fill(false)
+  );
+
+  const [frame, setFrame] = useState<JSX.Element[]>(
+    Array(height * width).fill(
+      <Cell
+        gameState={gameState}
+        setGameState={setGameState}
+        isAlive={gameState[0]}
+        index={0}
+      />
+    )
   );
 
   useInterval(() => {
